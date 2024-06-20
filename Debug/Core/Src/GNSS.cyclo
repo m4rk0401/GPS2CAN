@@ -1,0 +1,17 @@
+../Core/Src/GNSS.c:43:6:GNSS_Init	1
+../Core/Src/GNSS.c:65:6:GNSS_Reset	1
+../Core/Src/GNSS.c:74:6:GNSS_ParseBuffer	14
+../Core/Src/GNSS.c:97:6:GNSS_GetUniqID	1
+../Core/Src/GNSS.c:107:6:GNSS_GetNavigatorData	1
+../Core/Src/GNSS.c:117:6:GNSS_GetPOSLLHData	1
+../Core/Src/GNSS.c:127:6:GNSS_GetPVTData	1
+../Core/Src/GNSS.c:137:6:GNSS_GetDOPData	1
+../Core/Src/GNSS.c:148:6:GNSS_ParseUniqID	2
+../Core/Src/GNSS.c:158:6:GNSS_SetMode	11
+../Core/Src/GNSS.c:187:6:GNSS_ParsePVTData	11
+../Core/Src/GNSS.c:279:6:GNSS_ParseNavigatorData	1
+../Core/Src/GNSS.c:295:6:GNSS_ParsePOSLLHData	7
+../Core/Src/GNSS.c:334:6:GNSS_ParseDOPData	3
+../Core/Src/GNSS.c:361:6:GNSS_SetUBXConfig	1
+../Core/Src/GNSS.c:371:6:GNSS_LoadConfig	1
+../Core/Src/GNSS.c:393:9:GNSS_Checksum	1
