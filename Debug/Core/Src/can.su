@@ -1,4 +1,0 @@
-../Core/Src/can.c:31:9:send_date	16	static
-../Core/Src/can.c:59:9:send_position	32	static
-../Core/Src/can.c:90:9:send_speed	24	static
-../Core/Src/can.c:117:9:send_status	24	static
