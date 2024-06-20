@@ -156,27 +156,22 @@ int main(void)
 		printf("Sec: %d\r\n", GNSS_Handle.sec);
 		printf("Msec: %d\r\n", GNSS_Handle.msec);
 
+		HAL_Delay(25);
+
 		Timer = HAL_GetTick();
-		/*
-		printf("NumSv: %d\r\n", GNSS_Handle.numSv);
-		printf("CK_A calc: %d\r\n", GNSS_Handle.ckA_calc);
-		printf("CK_B calc: %d\r\n", GNSS_Handle.ckB_calc);
-		printf("CK_A data: %d\r\n", GNSS_Handle.ckB_data);
-		printf("CK_B data: %d\r\n\n", GNSS_Handle.ckB_data);
-		*/
     }
 
-    /*
     if ((HAL_GetTick() - Timer2) > 1000)
 	{
-
 		GNSS_GetDOPData(&GNSS_Handle);
 		GNSS_ParseBuffer(&GNSS_Handle);
 
-		printf("HDOP: %f\r\n\n", GNSS_Handle.hDOP);
+		printf("HDOP: %.2f\r\n\n", GNSS_Handle.hDOP);
+
+		HAL_Delay(25);
 
 		Timer2 = HAL_GetTick();
-	}*/
+	}
 
   }
   /* USER CODE END 3 */
