@@ -48,11 +48,6 @@ uint8_t send_date(GNSS_StateHandle *GNSS)
 	if (HAL_CAN_AddTxMessage(&hcan, &TxMsg, (uint8_t*)TxData, &TxMailbox) != HAL_OK)
 	{
 		Error_Handler();
-		return 1;
-	}
-	else
-	{
-		return 0;
 	}
 }
 
@@ -62,16 +57,16 @@ uint8_t send_position(GNSS_StateHandle *GNSS)
 	TxMsg.IDE = CAN_ID_STD;
 	TxMsg.DLC = 8;
 
-	long lat = (long)GNSS->fLat * 10000000;
+	long lat = (long)(GNSS->fLat * 10000000);
 	for(int i=0; i<4; i++)
 	{
 		TxData[i] = (uint8_t)((lat >> (i * 8)) & 0xFF);
 	}
 
-	long lon = (long)GNSS->fLon * 10000000;
-	for(int i=4; i<8; i++)
+	long lon = (long)(GNSS->fLon * 10000000);
+	for(int i=0; i<4; i++)
 	{
-		TxData[i] = (uint8_t)((lon >> (i * 8)) & 0xFF);
+		TxData[i + 4] = (uint8_t)((lon >> (i * 8)) & 0xFF);
 	}
 
 	while(HAL_CAN_IsTxMessagePending(&hcan, TxMailbox));	// Wait until Mailbox is ready to compute next message
@@ -93,11 +88,14 @@ uint8_t send_speed(GNSS_StateHandle *GNSS)
 	TxMsg.IDE = CAN_ID_STD;
 	TxMsg.DLC = 4;
 
+	//printf("%f", GNSS->gSpeed);
+
 	uint16_t tmp = (uint16_t)(GNSS->gSpeed * 100);
 	TxData[0] = (uint8_t)(tmp & 0xFF);
 	TxData[1] = (uint8_t)((tmp >> 8) & 0xFF);
 
 	tmp = (uint16_t)(GNSS->headMot * 100);
+
 	TxData[2] = (uint8_t)(tmp & 0xFF);
 	TxData[3] = (uint8_t)((tmp >> 8) & 0xFF);
 

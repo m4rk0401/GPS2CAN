@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <GNSS.h>
+#include <can.h>
 
 /* USER CODE END Includes */
 
@@ -117,6 +118,17 @@ int main(void)
   MX_CAN_Init();
   /* USER CODE BEGIN 2 */
 
+  /* Set up activations for CAN */
+  HAL_CAN_ActivateNotification(&hcan, CAN_IT_TX_MAILBOX_EMPTY);
+  HAL_CAN_ActivateNotification(&hcan, CAN_IT_ERROR);
+  HAL_CAN_ActivateNotification(&hcan, CAN_IT_BUSOFF);
+  HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING);
+
+  if (HAL_CAN_Start(&hcan) != HAL_OK)
+  {
+	  Error_Handler();
+  }
+
   GNSS_Init(&GNSS_Handle, &huart1);
   HAL_Delay(100);
 
@@ -151,10 +163,16 @@ int main(void)
 		} else {
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 		}
+		send_date(&GNSS_Handle);
+		send_position(&GNSS_Handle);
+		send_speed(&GNSS_Handle);
+		send_status(&GNSS_Handle);
 
+		/*
 		printf("FixType: %d\r\n", GNSS_Handle.fixType);
-		printf("Sec: %d\r\n", GNSS_Handle.sec);
-		printf("Msec: %d\r\n", GNSS_Handle.msec);
+		printf("Speed: %f\r\n", GNSS_Handle.gSpeed);
+		printf("Head mot: %f\r\n\n", GNSS_Handle.headMot);
+		*/
 
 		HAL_Delay(25);
 
@@ -196,7 +214,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL8;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();

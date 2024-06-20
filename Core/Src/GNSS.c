@@ -28,6 +28,8 @@
 
 #include "GNSS.h"
 
+#include <stdio.h>
+
 GNSS_StateHandle GNSS_Handle; // Definition of GNSS_Handle
 
 union u_Short uShort;
