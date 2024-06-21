@@ -31,6 +31,8 @@
 #include <stdio.h>
 
 GNSS_StateHandle GNSS_Handle; // Definition of GNSS_Handle
+int counter_out;
+int counter_in;
 
 union u_Short uShort;
 union i_Short iShort;
@@ -74,7 +76,6 @@ void GNSS_Reset(GNSS_StateHandle *GNSS) {
  * @param GNSS Pointer to main GNSS structure.
  */
 void GNSS_ParseBuffer(GNSS_StateHandle *GNSS) {
-
 	for (int var = 0; var <= 100; ++var) {
 		if (GNSS->uartWorkingBuffer[var] == 0xB5 && GNSS->uartWorkingBuffer[var + 1] == 0x62) {
 			if (GNSS->uartWorkingBuffer[var + 2] == 0x27 && GNSS->uartWorkingBuffer[var + 3] == 0x03) { //Look at: 32.19.1.1 u-blox 8 Receiver description
@@ -83,6 +84,7 @@ void GNSS_ParseBuffer(GNSS_StateHandle *GNSS) {
 				GNSS_ParseNavigatorData(GNSS);
 			} else if (GNSS->uartWorkingBuffer[var + 2] == 0x01 && GNSS->uartWorkingBuffer[var + 3] == 0x07) { //Look at: 32.17.30.1 u-blox 8 Receiver description
 				GNSS_ParsePVTData(GNSS);
+				break;
 			} else if (GNSS->uartWorkingBuffer[var + 2] == 0x01 && GNSS->uartWorkingBuffer[var + 3] == 0x02) { // Look at: 32.17.15.1 u-blox 8 Receiver description
 				GNSS_ParsePOSLLHData(GNSS);
 			} else if (GNSS->uartWorkingBuffer[var + 2] == 0x01 && GNSS->uartWorkingBuffer[var + 3] == 0x04) { // Look at: 32.17.6.1 u-blox 8 Receiver description

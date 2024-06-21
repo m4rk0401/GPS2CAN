@@ -158,26 +158,24 @@ int main(void)
 		GNSS_GetPVTData(&GNSS_Handle);
 		GNSS_ParseBuffer(&GNSS_Handle);
 
-		if(GNSS_Handle.ckA_calc == GNSS_Handle.ckA_data) {
+		if(GNSS_Handle.ckA_calc == GNSS_Handle.ckA_data && GNSS_Handle.ckB_calc == GNSS_Handle.ckB_data) {
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+
+
+//			printf("FixType: %d\r\n", GNSS_Handle.fixType);
+//			printf("Speed: %f\r\n", GNSS_Handle.gSpeed);
+//			printf("Head mot: %f\r\n\n", GNSS_Handle.headMot);
+
+			send_date(&GNSS_Handle);
+			send_position(&GNSS_Handle);
+			send_speed(&GNSS_Handle);
+			send_status(&GNSS_Handle);
+
 		} else {
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+
+			printf("Checksum error\r\n\n");
 		}
-
-		/*
-		send_date(&GNSS_Handle);
-		send_position(&GNSS_Handle);
-		send_speed(&GNSS_Handle);
-		send_status(&GNSS_Handle);
-		*/
-
-		/*
-		printf("FixType: %d\r\n", GNSS_Handle.fixType);
-		printf("Speed: %f\r\n", GNSS_Handle.gSpeed);
-		printf("Head mot: %f\r\n\n", GNSS_Handle.headMot);
-		*/
-
-		HAL_Delay(25);
 
 		Timer = HAL_GetTick();
     }
