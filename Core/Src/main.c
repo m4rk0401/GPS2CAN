@@ -163,10 +163,13 @@ int main(void)
 		} else {
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 		}
+
+		/*
 		send_date(&GNSS_Handle);
 		send_position(&GNSS_Handle);
 		send_speed(&GNSS_Handle);
 		send_status(&GNSS_Handle);
+		*/
 
 		/*
 		printf("FixType: %d\r\n", GNSS_Handle.fixType);
@@ -179,6 +182,7 @@ int main(void)
 		Timer = HAL_GetTick();
     }
 
+    /*
     if ((HAL_GetTick() - Timer2) > 1000)
 	{
 		GNSS_GetDOPData(&GNSS_Handle);
@@ -189,7 +193,7 @@ int main(void)
 		HAL_Delay(25);
 
 		Timer2 = HAL_GetTick();
-	}
+	}*/
 
   }
   /* USER CODE END 3 */
