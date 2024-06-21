@@ -148,6 +148,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int counter = 0;
   while (1)
   {
     /* USER CODE END WHILE */
@@ -171,6 +172,21 @@ int main(void)
 			send_speed(&GNSS_Handle);
 			send_status(&GNSS_Handle);
 
+			if(counter == 50)
+			{
+				HAL_Delay(15);
+				GNSS_GetDOPData(&GNSS_Handle);
+				GNSS_ParseBuffer(&GNSS_Handle);
+
+				counter = 0;
+
+				printf("HDOP: %.2f\r\n\n", GNSS_Handle.hDOP);
+			}
+			else
+			{
+				counter = counter + 1;
+			}
+
 		} else {
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 
@@ -179,19 +195,6 @@ int main(void)
 
 		Timer = HAL_GetTick();
     }
-
-    /*
-    if ((HAL_GetTick() - Timer2) > 1000)
-	{
-		GNSS_GetDOPData(&GNSS_Handle);
-		GNSS_ParseBuffer(&GNSS_Handle);
-
-		printf("HDOP: %.2f\r\n\n", GNSS_Handle.hDOP);
-
-		HAL_Delay(25);
-
-		Timer2 = HAL_GetTick();
-	}*/
 
   }
   /* USER CODE END 3 */
